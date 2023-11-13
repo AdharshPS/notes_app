@@ -8,6 +8,7 @@ class ListScreenWidget extends StatefulWidget {
     required this.date,
     this.onDeleteTap,
     this.onEdit,
+    required this.color,
   });
   String title;
   String description;
@@ -15,6 +16,8 @@ class ListScreenWidget extends StatefulWidget {
   // void Function()? onTap   or
   void Function()? onDeleteTap;
   void Function()? onEdit;
+
+  Color color;
 
   @override
   State<ListScreenWidget> createState() => _ListScreenWidgetState();

@@ -17,6 +17,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String value = "";
 
+  Color color = Colors.white;
+
+  Color? containerColor;
+
   List<Color> colorList = [
     Colors.green,
   ];
@@ -43,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
           separatorBuilder: (context, index) => SizedBox(height: 20),
           itemCount: addList.length,
           itemBuilder: (context, index) => ListScreenWidget(
+            color: Colors.yellow,
             title: addList[index].title,
             description: addList[index].description,
             date: addList[index].date,
@@ -174,9 +179,26 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(
                 DataBase.colorList.length,
-                (index) => CircleAvatar(
-                  radius: 30,
-                  backgroundColor: DataBase.colorList[index],
+                (index) => StatefulBuilder(
+                  builder: (context, inSetState) => InkWell(
+                    onTap: () {
+                      color = Colors.white;
+                      color = Colors.black;
+                      inSetState(() {});
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        color: DataBase.colorList[index],
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: color,
+                          width: 5,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
