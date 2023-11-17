@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String value = "";
 
-  Color color = Colors.white;
+  int? checkValue;
 
   Color? containerColor;
 
@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       title: "modelTitle",
       description: "modelDescription",
       date: "modelDate",
+      color: 4,
     ),
     // NotesModel(
     //   title: "modelTitle2",
@@ -47,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           separatorBuilder: (context, index) => SizedBox(height: 20),
           itemCount: addList.length,
           itemBuilder: (context, index) => ListScreenWidget(
-            color: Colors.yellow,
+            color: DataBase.colorList[addList[index].color],
             title: addList[index].title,
             description: addList[index].description,
             date: addList[index].date,
@@ -69,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Icon(Icons.add),
           onPressed: () {
             value = "Submit";
+            checkValue = null;
             bottomSheet(context);
           }),
     );
@@ -79,149 +81,151 @@ class _HomeScreenState extends State<HomeScreen> {
       // isScrollControlled: true,
       context: context,
       builder: (context) {
-        return Column(
-          // mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // Expanded(
-            //   child: ListView.separated(
-            //     itemBuilder: (context, index) => Container(
-            //       width: 300,
-            //       decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(20),
-            //       ),
-            //       child: TextField(
-            //         decoration: InputDecoration(
-            //           contentPadding: EdgeInsets.symmetric(
-            //               vertical: 10, horizontal: 20),
-            //           filled: true,
-            //           fillColor: Colors.grey,
-            //           hintStyle: TextStyle(
-            //             fontSize: 18,
-            //             fontWeight: FontWeight.w900,
-            //           ),
-            //           hintText: bottomSheetContents[index],
-            //         ),
-            //       ),
-            //     ),
-            //     separatorBuilder: (context, index) => SizedBox(height: 10),
-            //     itemCount: 3,
-            //   ),
-            // ),
-            SizedBox(height: 10),
-            Container(
-              width: 300,
-              height: 40,
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+        return StatefulBuilder(
+          builder: (context, inSetState) => Column(
+            // mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // Expanded(
+              //   child: ListView.separated(
+              //     itemBuilder: (context, index) => Container(
+              //       width: 300,
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(20),
+              //       ),
+              //       child: TextField(
+              //         decoration: InputDecoration(
+              //           contentPadding: EdgeInsets.symmetric(
+              //               vertical: 10, horizontal: 20),
+              //           filled: true,
+              //           fillColor: Colors.grey,
+              //           hintStyle: TextStyle(
+              //             fontSize: 18,
+              //             fontWeight: FontWeight.w900,
+              //           ),
+              //           hintText: bottomSheetContents[index],
+              //         ),
+              //       ),
+              //     ),
+              //     separatorBuilder: (context, index) => SizedBox(height: 10),
+              //     itemCount: 3,
+              //   ),
+              // ),
+              SizedBox(height: 10),
+              Container(
+                width: 300,
+                height: 40,
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextFormField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.grey,
+                      hintStyle: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      hintText: "Title"),
+                ),
               ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+              SizedBox(height: 10),
+              Container(
+                width: 300,
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextFormField(
+                  controller: desController,
+                  decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 40, horizontal: 10),
+                      filled: true,
+                      fillColor: Colors.grey,
+                      hintStyle: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      hintText: "Description"),
+                ),
               ),
-              child: TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.grey,
-                    hintStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                    ),
-                    hintText: "Title"),
+              SizedBox(height: 10),
+              Container(
+                width: 300,
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextFormField(
+                  controller: dateController,
+                  decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      filled: true,
+                      fillColor: Colors.grey,
+                      hintStyle: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      hintText: "Date"),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: 300,
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: TextFormField(
-                controller: desController,
-                decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 40, horizontal: 10),
-                    filled: true,
-                    fillColor: Colors.grey,
-                    hintStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                    ),
-                    hintText: "Description"),
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: 300,
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: TextFormField(
-                controller: dateController,
-                decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    filled: true,
-                    fillColor: Colors.grey,
-                    hintStyle: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                    ),
-                    hintText: "Date"),
-              ),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(
-                DataBase.colorList.length,
-                (index) => StatefulBuilder(
-                  builder: (context, inSetState) => InkWell(
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(
+                  DataBase.colorList.length,
+                  (index) => InkWell(
                     onTap: () {
-                      color = Colors.white;
-                      color = Colors.black;
+                      checkValue = index;
                       inSetState(() {});
                     },
                     child: Container(
                       height: 50,
                       width: 50,
                       decoration: BoxDecoration(
-                        color: DataBase.colorList[index],
+                        color: DataBase.colorList[index].withOpacity(.5),
                         shape: BoxShape.circle,
-                        border: Border.all(
-                          color: color,
-                          width: 5,
-                        ),
+                        border: checkValue == index
+                            ? Border.all(
+                                color: DataBase.colorList[index],
+                                width: 5,
+                              )
+                            : null,
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                addList.add(
-                  NotesModel(
-                    title: nameController.text,
-                    description: desController.text,
-                    date: dateController.text,
-                  ),
-                );
-                setState(() {});
-                nameController.clear();
-                desController.clear();
-                dateController.clear();
-                Navigator.pop(context);
-              },
-              child: Text(value),
-            ),
-            SizedBox(height: 10),
-          ],
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  addList.add(
+                    NotesModel(
+                      title: nameController.text,
+                      description: desController.text,
+                      date: dateController.text,
+                      color: checkValue!,
+                    ),
+                  );
+                  setState(() {});
+                  nameController.clear();
+                  desController.clear();
+                  dateController.clear();
+                  Navigator.pop(context);
+                },
+                child: Text(value),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
         );
       },
     );

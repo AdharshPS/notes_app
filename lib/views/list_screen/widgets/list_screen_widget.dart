@@ -29,7 +29,7 @@ class _ListScreenWidgetState extends State<ListScreenWidget> {
     return Container(
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.amber,
+        color: widget.color,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
